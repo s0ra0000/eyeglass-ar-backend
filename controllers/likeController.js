@@ -32,7 +32,7 @@ const getUserLikedEyeglasses = async (request, reply) => {
 
   try {
     const likedEyeglasses = await likeModel.getUserLikedEyeglasses(user_id);
-    return reply.send({ likedEyeglasses });
+    return reply.send(likedEyeglasses);
   } catch (error) {
     return reply.status(500).send({ success: false, error: error.message });
   }
