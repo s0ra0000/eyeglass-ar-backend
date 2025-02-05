@@ -3,8 +3,13 @@ const eyeglassController = require("../controllers/eyeglassController");
 const { verifyJWT, verifyAdmin } = require("../utils/helpers");
 
 async function eyeglassRoutes(fastify, options) {
+  fastify.get(
+    "/",
+    { preValidation: [verifyJWT] },
+    eyeglassController.getEyeglasses
+  );
   // Public routes
-  fastify.get("/", eyeglassController.getEyeglasses);
+  // fastify.get("/", eyeglassController.getEyeglasses);
   fastify.get("/:id/model", eyeglassController.getEyeglassModel);
 
   // Admin routes

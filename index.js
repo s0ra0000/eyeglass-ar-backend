@@ -17,11 +17,10 @@ fastify.register(require("@fastify/multipart"), {
     fileSize: 100 * 1024 * 1024, // 100 MB
   },
 });
-
 // Register routes
 fastify.register(require("./routes/authRoutes"), { prefix: "/auth" });
 fastify.register(require("./routes/eyeglassRoutes"), { prefix: "/eyeglasses" });
-
+fastify.register(require("./routes/likeRoutes"), { prefix: "/likes" });
 // Run the server!
 const start = async () => {
   try {

@@ -1,8 +1,14 @@
 // models/eyeglassModel.js
 const pool = require("./db");
 
-const getAllEyeglasses = async () => {
-  const result = await pool.query("SELECT * FROM eyeglasses");
+const getAllEyeglasses = async (user_id) => {
+  const result = await pool.query(
+    `SELECT e.*, 
+            CASE WHEN l.user_id IS NOT NULL THEN true ELSE false END AS is_liked
+     FROM eyeglasses e
+     LEFT JOIN likes l ON e.id = l.eyeglass_id AND l.user_id = $1`,
+    [user_id]
+  );
   return result.rows;
 };
 

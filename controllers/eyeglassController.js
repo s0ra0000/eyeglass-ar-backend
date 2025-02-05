@@ -9,8 +9,9 @@ const {
 const { uploadToS3 } = require("../utils/s3");
 
 const getEyeglasses = async (req, reply) => {
+  const user_id = req.user.id;
   try {
-    const eyeglasses = await getAllEyeglasses();
+    const eyeglasses = await getAllEyeglasses(user_id);
     return reply.send(eyeglasses);
   } catch (error) {
     req.log.error(error);
