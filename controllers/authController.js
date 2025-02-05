@@ -23,7 +23,15 @@ const register = async (req, reply) => {
       role: "user",
     });
 
-    return reply.status(201).send({ message: "User registered successfully" });
+    const token = await reply.jwtSign({
+      id: newUser.id,
+      role: newUser.role,
+      username: newUser.username,
+    });
+
+    return reply
+      .status(201)
+      .send({ message: "User registered successfully", token: token });
   } catch (error) {
     req.log.error(error);
     return reply.status(500).send({ message: "Internal Server Error" });
@@ -47,7 +55,11 @@ const login = async (req, reply) => {
     }
 
     // Generate JWT
-    const token = await reply.jwtSign({ id: user.id, role: user.role });
+    const token = await reply.jwtSign({
+      id: user.id,
+      role: user.role,
+      username: user.username,
+    });
 
     return reply.send({ token });
   } catch (error) {
